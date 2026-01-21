@@ -2,360 +2,358 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Taveberries — маркетплейс</title>
-  
-  <!-- Telegram Web App скрипт ОБЯЗАТЕЛЬНО -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Taveberries — цветы и подарки</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  
   <style>
     :root {
-      --tg-theme-bg-color: #ffffff;
-      --tg-theme-text-color: #000000;
-      --tg-theme-hint-color: #999999;
-      --tg-theme-button-color: #7b4eff;     /* фиолетовый как у WB */
-      --tg-theme-button-text-color: #ffffff;
-      --accent: #7b4eff;
-      --accent-dark: #5a3acc;
+      --bg: #ffffff;
+      --text: #000000;
+      --hint: #8a8a8e;
       --gray: #f5f5f5;
-      --light-gray: #e0e0e0;
+      --light: #e5e5e5;
+      --accent: #6c5ce7;       /* фиолетовый как у Wildberries */
+      --accent-dark: #5649c0;
+      --danger: #ff3b30;
+      --success: #34c759;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    [data-theme="dark"] {
+      --bg: #0f0f0f;
+      --text: #ffffff;
+      --hint: #8e8e93;
+      --gray: #1c1c1e;
+      --light: #2c2c2e;
     }
-
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--tg-theme-bg-color);
-      color: var(--tg-theme-text-color);
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      padding-bottom: 80px; /* место под нижнее меню */
+      padding-bottom: 80px;
     }
-
-    /* Адаптация под тему Telegram (темная/светлая) */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --tg-theme-bg-color: #0f0f0f;
-        --tg-theme-text-color: #ffffff;
-        --gray: #1a1a1a;
-        --light-gray: #2a2a2a;
-      }
-    }
-
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 50px;
-      background: var(--tg-theme-bg-color);
-      border-bottom: 1px solid var(--light-gray);
+      top: 0; left: 0; right: 0;
+      height: 54px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--light);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      z-index: 1000;
-      font-weight: 600;
-    }
-
-    .logo {
-      font-size: 20px;
-      color: var(--accent);
-    }
-
-    .search-bar {
-      margin: 60px 16px 16px;
-      position: relative;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 12px 16px 12px 40px;
-      border: 1px solid var(--light-gray);
-      border-radius: 12px;
-      font-size: 16px;
-      background: var(--gray);
-    }
-
-    .search-bar::before {
-      content: "🔍";
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--tg-theme-hint-color);
-    }
-
-    .promo {
-      margin: 0 16px 24px;
-      height: 160px;
-      background: linear-gradient(135deg, #7b4eff, #c066ff);
-      border-radius: 16px;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .promo::after {
-      content: "АКЦИЯ до -70%";
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.3);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-    }
-
-    .section-title {
-      padding: 0 16px;
-      margin: 24px 0 12px;
+      z-index: 100;
       font-size: 18px;
       font-weight: 600;
     }
-
-    .products-grid {
+    .logo { color: var(--accent); letter-spacing: -0.5px; }
+    .search {
+      margin: 62px 16px 16px;
+      position: relative;
+    }
+    .search input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--gray);
+      border: 1px solid var(--light);
+      border-radius: 12px;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .search::before {
+      content: "🔍";
+      position: absolute;
+      left: 16px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--hint);
+      font-size: 18px;
+    }
+    .promo {
+      margin: 0 16px 20px;
+      height: 160px;
+      background: linear-gradient(135deg, var(--accent), #a29bfe);
+      border-radius: 16px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(108,92,231,0.3);
+    }
+    .promo small { font-size: 14px; opacity: 0.9; margin-top: 8px; }
+    .section-title {
+      padding: 0 16px;
+      margin: 24px 0 12px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+    .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
       gap: 12px;
       padding: 0 16px;
     }
-
-    .product-card {
-      background: var(--tg-theme-bg-color);
+    .card {
+      background: var(--bg);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
       transition: transform 0.15s;
     }
-
-    .product-card:active {
-      transform: scale(0.98);
-    }
-
-    .product-img {
+    .card:active { transform: scale(0.97); }
+    .card-img {
       width: 100%;
-      aspect-ratio: 1 / 1.2;
+      aspect-ratio: 1 / 1.15;
       object-fit: cover;
-      background: #f0f0f0;
+      background: var(--gray);
     }
-
-    .product-info {
-      padding: 10px;
-    }
-
-    .product-title {
+    .card-body { padding: 10px 10px 14px; }
+    .card-title {
       font-size: 14px;
-      line-height: 1.4;
-      height: 40px;
+      line-height: 1.38;
+      min-height: 38px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
-
-    .product-price {
-      margin-top: 6px;
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 16px;
+    .price-row {
+      margin: 6px 0 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-
-    .product-old-price {
-      color: var(--tg-theme-hint-color);
-      text-decoration: line-through;
-      font-size: 13px;
-      margin-left: 8px;
+    .price { font-size: 17px; font-weight: 700; color: var(--accent); }
+    .old-price { font-size: 13px; color: var(--hint); text-decoration: line-through; }
+    .discount {
+      background: var(--danger);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
     }
-
-    .add-btn {
-      margin-top: 8px;
+    .add-to-cart {
       background: var(--accent);
       color: white;
       border: none;
       width: 100%;
-      padding: 8px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.2s;
     }
-
+    .add-to-cart:active { background: var(--accent-dark); }
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: var(--tg-theme-bg-color);
-      border-top: 1px solid var(--light-gray);
+      bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: var(--bg);
+      border-top: 1px solid var(--light);
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 1000;
+      z-index: 100;
+      font-size: 11px;
+      color: var(--hint);
     }
-
-    .nav-item {
-      text-align: center;
-      color: var(--tg-theme-hint-color);
-      font-size: 12px;
-    }
-
-    .nav-item.active {
-      color: var(--accent);
-    }
-
-    .cart-badge {
+    .nav-item { text-align: center; position: relative; }
+    .nav-item.active { color: var(--accent); font-weight: 600; }
+    .badge {
+      position: absolute;
+      top: -6px; right: -12px;
       background: var(--accent);
       color: white;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
       font-size: 10px;
+      font-weight: 700;
+      min-width: 18px; height: 18px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      top: -6px;
-      right: -6px;
+      padding: 0 4px;
+    }
+    #cart-page { display: none; padding: 70px 16px 100px; }
+    .cart-item {
+      display: flex;
+      background: var(--gray);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      padding: 12px;
+      gap: 12px;
+      align-items: center;
+    }
+    .cart-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+    .cart-info { flex: 1; }
+    .cart-total {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 24px 0 16px;
+      text-align: right;
+    }
+    .checkout-btn {
+      background: var(--success);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
 
   <header>
     <div class="logo">Taveberries</div>
     <div>🛒 <span id="cart-count">0</span></div>
   </header>
 
-  <div class="search-bar">
-    <input type="text" placeholder="Поиск товаров, букетов, подарков..." />
+  <div class="search">
+    <input type="text" placeholder="Поиск букетов, роз, подарков..." />
   </div>
 
   <div class="promo">
-    Цветы и подарки от 99 AED!<br>Доставка сегодня по Абу-Даби
+    Акция до -60%<br>
+    <small>Доставка сегодня по Абу-Даби и Дубаю от 99 AED</small>
   </div>
 
   <div class="section-title">Хиты продаж</div>
-  <div class="products-grid" id="products">
-    <!-- Карточки добавляются JS-ом -->
+  <div class="products" id="products"></div>
+
+  <!-- Страница корзины -->
+  <div id="cart-page">
+    <div class="section-title">Корзина</div>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Итого: 0 AED</div>
+    <button class="checkout-btn" onclick="tg.showPopup({title:'Оформление',message:'Переход к оплате...',buttons:[{type:'ok'}]})">
+      Оформить заказ
+    </button>
   </div>
 
-  <div class="section-title">Категории</div>
-  <div class="products-grid">
-    <div class="product-card"><div class="product-img" style="background:#ffebee">Розы</div></div>
-    <div class="product-card"><div class="product-img" style="background:#e8f5e9">Букеты в коробке</div></div>
-    <div class="product-card"><div class="product-img" style="background:#e3f2fd">Подарки</div></div>
-    <div class="product-card"><div class="product-img" style="background:#fff3e0">Орхидеи</div></div>
-  </div>
-
-  <!-- Нижнее меню как в WB -->
   <div class="bottom-nav">
-    <div class="nav-item active">Главная</div>
-    <div class="nav-item">Каталог</div>
-    <div class="nav-item" style="position:relative;">
+    <div class="nav-item active" onclick="showMain()">Главная</div>
+    <div class="nav-item" onclick="alert('Каталог — скоро')">Каталог</div>
+    <div class="nav-item" onclick="showCart()">
       Корзина
-      <div class="cart-badge" id="cart-badge">0</div>
+      <span class="badge" id="cart-badge">0</span>
     </div>
-    <div class="nav-item">Профиль</div>
+    <div class="nav-item" onclick="alert('Личный кабинет')">Я</div>
   </div>
 
   <script>
-    // Инициализация Telegram Mini App
     const tg = window.Telegram.WebApp;
     tg.ready();
-    tg.expand(); // на весь экран
+    tg.expand();
 
-    // Пример адаптации темы (если пользователь в тёмной теме TG)
+    // Токен твоего бота от BotFather
+    const BOT_TOKEN = "8539575626:AAEPT8-pVxqOxKtQ919N61LkdseYcf6r57I";
+
+    // Адаптация под тёмную/светлую тему Telegram
     if (tg.colorScheme === 'dark') {
-      document.documentElement.style.setProperty('--tg-theme-bg-color', '#0f0f0f');
-      document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
+      document.body.dataset.theme = 'dark';
     }
 
-    // Простая корзина (локальная)
     let cart = [];
-    const cartCountEl = document.getElementById('cart-count');
-    const cartBadge = document.getElementById('cart-badge');
 
-    function updateCart() {
+    function updateCartUI() {
       const count = cart.length;
-      cartCountEl.textContent = count;
-      cartBadge.textContent = count;
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-badge').textContent = count;
+
+      const itemsEl = document.getElementById('cart-items');
+      itemsEl.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, idx) => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img class="cart-img" src="${item.img}" alt="${item.name}">
+          <div class="cart-info">
+            <div style="font-weight:600">${item.name}</div>
+            <div style="color:var(--accent);margin:4px 0">${item.price} AED</div>
+            <small style="color:var(--hint)">1 × ${item.price} AED</small>
+          </div>
+          <button onclick="removeFromCart(${idx})" style="background:none;border:none;color:var(--danger);font-size:24px;font-weight:bold">×</button>
+        `;
+        itemsEl.appendChild(div);
+      });
+
+      document.getElementById('cart-total').textContent = `Итого: ${total} AED`;
     }
 
-    // Пример товаров (потом заменишь на свои / с бэкенда)
-    const products = [
-      { id:1, name: "Букет 51 красная роза", price: 399, oldPrice: 599, img: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=400" },
-      { id:2, name: "Розы в коробке микс", price: 249, oldPrice: 349, img: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d26?w=400" },
-      { id:3, name: "Орхидея в горшке премиум", price: 179, img: "https://images.unsplash.com/photo-1610479577743-3e4d3c3c3e3c?w=400" },
-      { id:4, name: "Подарочный набор с вином", price: 299, oldPrice: 399, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-      { id:5, name: "Букет пионов нежный", price: 449, img: "https://images.unsplash.com/photo-1526045478516-99145907023c?w=400" },
+    function addToCart(product) {
+      cart.push(product);
+      updateCartUI();
+      tg.HapticFeedback.impactOccurred('medium');
+      tg.showPopup({
+        title: "Добавлено в корзину!",
+        message: `${product.name}\n${product.price} AED`,
+        buttons: [{type:"ok"}]
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function showMain() {
+      document.getElementById('products').style.display = 'grid';
+      document.getElementById('cart-page').style.display = 'none';
+      document.querySelectorAll('.nav-item')[0].classList.add('active');
+      document.querySelectorAll('.nav-item')[2].classList.remove('active');
+    }
+
+    function showCart() {
+      document.getElementById('products').style.display = 'none';
+      document.getElementById('cart-page').style.display = 'block';
+      document.querySelectorAll('.nav-item')[0].classList.remove('active');
+      document.querySelectorAll('.nav-item')[2].classList.add('active');
+      updateCartUI();
+    }
+
+    // Примеры товаров (замени фото и названия на свои)
+    const productsData = [
+      { id:1, name: "Букет 51 красная роза", price: 399, old: 599, img: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=600" },
+      { id:2, name: "Розы в коробке микс 25 шт", price: 249, old: 349, img: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d26?w=600" },
+      { id:3, name: "Премиум орхидея в коробке", price: 179, img: "https://images.unsplash.com/photo-1610479577743-3e4d3c3c3e3c?w=600" },
+      { id:4, name: "Нежный букет пионов", price: 449, old: 599, img: "https://images.unsplash.com/photo-1526045478516-99145907023c?w=600" },
+      { id:5, name: "Букет 101 роза Эквадор", price: 899, old: 1299, img: "https://images.unsplash.com/photo-1562692500-5d1361d0a0c0?w=600" },
+      { id:6, name: "Подарок: цветы + вино", price: 299, old: 399, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" }
     ];
 
-    const productsGrid = document.getElementById('products');
-
-    products.forEach(p => {
+    const productsEl = document.getElementById('products');
+    productsData.forEach(p => {
       const card = document.createElement('div');
-      card.className = 'product-card';
+      card.className = 'card';
       card.innerHTML = `
-        <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
-        <div class="product-info">
-          <div class="product-title">${p.name}</div>
-          <div>
-            <span class="product-price">${p.price} AED</span>
-            ${p.oldPrice ? `<span class="product-old-price">${p.oldPrice} AED</span>` : ''}
+        <img class="card-img" src="${p.img}" alt="${p.name}">
+        <div class="card-body">
+          <div class="card-title">${p.name}</div>
+          <div class="price-row">
+            <span class="price">${p.price} AED</span>
+            ${p.old ? `<span class="old-price">${p.old} AED</span><span class="discount">-${Math.round((p.old - p.price)/p.old*100)}%</span>` : ''}
           </div>
-          <button class="add-btn" data-id="${p.id}">В корзину</button>
+          <button class="add-to-cart">В корзину</button>
         </div>
       `;
-      productsGrid.appendChild(card);
+      card.querySelector('.add-to-cart').onclick = () => addToCart(p);
+      productsEl.appendChild(card);
     });
 
-    // Добавление в корзину
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('add-btn')) {
-        const id = +e.target.dataset.id;
-        const product = products.find(p => p.id === id);
-        if (product) {
-          cart.push(product);
-          updateCart();
-          tg.showPopup({
-            title: "Добавлено!",
-            message: `${product.name} в корзине`,
-            buttons: [{type:"ok"}]
-          });
-        }
-      }
-    });
-
-    updateCart();
-
-    // Кнопка "Главная" Telegram (если хочешь)
-    tg.MainButton.setText("Оформить заказ");
-    tg.MainButton.setParams({color: "#7b4eff"});
-    tg.MainButton.show();
-    tg.MainButton.onClick(() => {
-      if (cart.length === 0) {
-        tg.showAlert("Корзина пуста");
-      } else {
-        tg.showPopup({
-          title: "Заказ",
-          message: `Товаров: ${cart.length}\nСумма: ${cart.reduce((s,p)=>s+p.price,0)} AED\nОформить?`,
-          buttons: [
-            {type:"ok", text:"Да, оплатить"},
-            {type:"cancel"}
-          ]
-        });
-      }
-    });
+    // Старт — главная страница
+    showMain();
   </script>
 </body>
 </html>
