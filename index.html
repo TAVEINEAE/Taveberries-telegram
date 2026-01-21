@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>Taveberries — цветы и подарки</title>
+  <title>Taveberries — маркетплейс</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="light">
@@ -14,19 +14,25 @@
   </header>
 
   <div class="search">
-    <input type="text" placeholder="Поиск букетов, роз, подарков..." />
+    <input type="text" placeholder="Поиск товаров, брендов..." id="search-input" oninput="filterProducts()" />
   </div>
 
-  <div class="promo">
+  <div class="promo" id="promo">
     Акция до -60%<br>
-    <small>Доставка сегодня по Абу-Даби и Дубаю от 99 AED</small>
+    <small>Доставка по Абу-Даби и Дубаю от 99 AED</small>
   </div>
 
-  <div class="section-title">Хиты продаж</div>
+  <div class="section-title" id="section-title">Хиты продаж</div>
   <div class="products" id="products"></div>
 
+  <!-- Страница каталога (список категорий) -->
+  <div id="catalog-page" style="display: none; padding: 70px 16px 100px;">
+    <div class="section-title">Каталог</div>
+    <div class="categories" id="categories"></div>
+  </div>
+
   <!-- Страница корзины -->
-  <div id="cart-page">
+  <div id="cart-page" style="display: none; padding: 70px 16px 100px;">
     <div class="section-title">Корзина</div>
     <div id="cart-items"></div>
     <div class="cart-total" id="cart-total">Итого: 0 AED</div>
